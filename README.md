@@ -1,4 +1,4 @@
-# Lantern
+# Glimpse
 2015 ViaSat Intern Hackathon Project
 
-A tool for disaster response teams to quickly and readily respond signal for help and supplies in a response area.
+A visualization tool that allows you to view live tweets in Google Cardboard
