@@ -13,6 +13,6 @@ https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend
     string in this file.
     -->
     <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">
-        DA:CC:50:22:19:B5:1B:31:24:4E:4C:CD:A9:65:74:B3:C0:0F:BA:DC;viasat.glimpse
+        AIzaSyC09LLw0HucdtBB3Zg4fMGivfI_c8By1Uk;viasat.glimpse
     </string>
 </resources>
