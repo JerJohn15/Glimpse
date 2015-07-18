@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package viasat.glimpse;
+package com.viasat.glimpse;
 
 /**
  * Contains vertex, normal and color data.

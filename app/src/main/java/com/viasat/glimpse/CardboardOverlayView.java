@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package viasat.glimpse;
+package com.viasat.glimpse;
 
 import android.content.Context;
 import android.graphics.Color;

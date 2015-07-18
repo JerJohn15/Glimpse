@@ -1,4 +1,4 @@
-package viasat.glimpse;
+package com.viasat.glimpse;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
