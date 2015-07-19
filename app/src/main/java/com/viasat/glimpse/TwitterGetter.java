@@ -6,6 +6,8 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 import android.os.Handler;
 
 import org.json.JSONArray;
@@ -28,7 +30,7 @@ public class TwitterGetter extends Thread {
     private static int lastIDNum = -1;
     private static String twitURL = null;
     private static final int timeout = 120;
-    private static final long refreshTimeout = 30000;
+    private static final long refreshTimeout = 15000;
 
     public TwitterGetter(TwitterMapActivity twitterMap) {
         this.twitterMap = twitterMap;
@@ -36,6 +38,7 @@ public class TwitterGetter extends Thread {
     }
 
     public void run() {
+        ArrayList<Integer> ids = new ArrayList<Integer>();
         String line;
         JSONObject jObj = null;
         JSONObject jObj2 = null;
@@ -47,6 +50,7 @@ public class TwitterGetter extends Thread {
         LatLng coords = null;
         double lng = 0;
         double lat = 0;
+        int id = 0;
 
         while (true) {
             OAuthService service = new ServiceBuilder()
@@ -64,8 +68,6 @@ public class TwitterGetter extends Thread {
                 twitURL = STREAM_URI + geoCode;
             else
                 twitURL = STREAM_URI + geoCode + sinceID + lastIDNum;
-            System.out.println(twitURL);
-            System.out.println("Sending request");
             OAuthRequest request = new OAuthRequest(Verb.GET, twitURL);
             request.setConnectionKeepAlive(true);
             service.signRequest(accessToken, request);
@@ -90,6 +92,7 @@ public class TwitterGetter extends Thread {
 
                         msg = jObj2.getString("text");
                         sn = jObj3.getString("screen_name");
+                        id = jObj2.getInt("id");
 
                         geoObj = jObj2.getJSONObject("geo");
                         lat = (geoObj.getJSONArray("coordinates")).getDouble(0);
@@ -97,7 +100,12 @@ public class TwitterGetter extends Thread {
 
                         coords = new LatLng(lat, lng);
 
-                        twitterMap.addTweetToMap(sn, msg, coords, timeout);
+                        System.out.println(ids.contains(id));
+                        if(!ids.contains(id)) {
+                            ids.add(id);
+                            twitterMap.addTweetToMap(sn, msg, coords, timeout);
+                        }
+
                     } catch (JSONException e) { }
                 }
                 try {
@@ -105,11 +113,8 @@ public class TwitterGetter extends Thread {
                     lastIDNum = jObj2.getInt("max_id");
                 } catch (JSONException e) { }
             }
-
             try {
-                System.out.println("Hi");
                 Thread.sleep(refreshTimeout);
-                System.out.println("Bye.");
             } catch (InterruptedException e) { }
         }
     }
