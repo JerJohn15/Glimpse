@@ -48,18 +48,15 @@ public class TwitterMapActivity extends FragmentActivity {
         TwitterGetter twitterGetter = new TwitterGetter(this);
         twitterGetter.start();
 
-        String username = "Christopher Chapline";
-        String message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a venenatis leo. Nunc massa mauris, maximus nec odio a, condimentum nullam.";
-        addTweetToMap(username, message, myLocation, 120);
-
         LatLng sec = new LatLng(myLocation.getLatitude() + 1, myLocation.getLongitude());
-        addTweetToMap("Testing again", "Testing", sec, 120);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
+        TwitterGetter streamConsumer = new TwitterGetter(this); // final because we will later pull the latest Tweet
+        streamConsumer.start();
     }
 
     public Location getMyLocation() {
@@ -148,6 +145,5 @@ public class TwitterMapActivity extends FragmentActivity {
 
         // Initialize map options. For example:
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-
     }
 }
