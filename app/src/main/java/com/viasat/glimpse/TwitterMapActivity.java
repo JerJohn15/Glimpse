@@ -71,31 +71,37 @@ public class TwitterMapActivity extends FragmentActivity {
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 13));
     }
 
-    public void addTweetToMap(String user, String tweet, LatLng location, int fadeOut) {
-        // Create the marker
-        final Marker marker = mMap.addMarker(new MarkerOptions()
-                        .position(location)
-                        .title(user)
-                        .snippet(tweet)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.bird))
-        );
-
-        // Make it fade out
-        ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
-        animator.setDuration(fadeOut * 1000);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+    public void addTweetToMap(final String user, final String tweet, final LatLng location,
+                              final int fadeOut) {
+        runOnUiThread(new Runnable() {
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float alpha = (float) animation.getAnimatedValue();
-                marker.setAlpha(alpha);
+            public void run() {
+                // Create the marker
+                final Marker marker = mMap.addMarker(new MarkerOptions()
+                                .position(location)
+                                .title(user)
+                                .snippet(tweet)
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.bird))
+                );
 
-                int roundedAlpha = (int) Math.round(alpha);
-                if ( roundedAlpha == 0 ){
-                    marker.remove();
-                }
+                // Make it fade out
+                ValueAnimator animator = ValueAnimator.ofFloat(1, 0);
+                animator.setDuration(fadeOut * 1000);
+                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        float alpha = (float) animation.getAnimatedValue();
+                        marker.setAlpha(alpha);
+
+                        int roundedAlpha = (int) Math.round(alpha);
+                        if (roundedAlpha == 0) {
+                            marker.remove();
+                        }
+                    }
+                });
+                animator.start();
             }
         });
-        animator.start();
     }
 
     public void addTweetToMap(String user, String tweet, Location location, int fadeOut) {
