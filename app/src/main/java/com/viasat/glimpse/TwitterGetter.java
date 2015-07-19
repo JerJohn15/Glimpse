@@ -19,7 +19,13 @@ import static com.viasat.glimpse.R.string.*;
 public class TwitterGetter extends Thread {
 
     private static final String STREAM_URI = "https://stream.twitter.com/1.1/statuses/filter.json";
-    private static final Resources res = TwitterMapActivity.getContext().getResources();
+    private TwitterMapActivity twitterMap;
+    private Resources res;
+
+    public TwitterGetter(TwitterMapActivity twitterMap) {
+        this.twitterMap = twitterMap;
+        res = twitterMap.getResources();
+    }
 
     public void run() {
         try {

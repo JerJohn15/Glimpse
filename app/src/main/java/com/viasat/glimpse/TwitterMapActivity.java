@@ -1,6 +1,7 @@
 package com.viasat.glimpse;
 
 import android.animation.ValueAnimator;
+import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.Image;
@@ -23,7 +24,8 @@ public class TwitterMapActivity extends FragmentActivity {
 
     private GoogleMap mMap;
     private LocationManager locationManager;
-    private Location startingLocation;
+
+    private static final int NUM_TWEETS = 30;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,10 +33,27 @@ public class TwitterMapActivity extends FragmentActivity {
         setContentView(R.layout.activity_twitter_map);
         setUpMapIfNeeded();
 
-        moveMapTo(getMyLocation());
+        Location myLocation = getMyLocation();
+
+//        for( int i = 0; i < NUM_TWEETS; i++ ) {
+//            String username = "User" + i;
+//            String message = "Current value of \"i\" is: " + i;
+//
+//            double newLatitude = myLocation.getLatitude() + Math.random();
+//            double newLongitutde = myLocation.getLongitude() + Math.random();
+//            LatLng latLng = new LatLng(newLatitude, newLongitutde);
+//
+//            addTweetToMap(username, message, latLng, 240);
+//        }
+        TwitterGetter twitterGetter = new TwitterGetter(this);
+        twitterGetter.start();
+
         String username = "Christopher Chapline";
         String message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a venenatis leo. Nunc massa mauris, maximus nec odio a, condimentum nullam.";
-        addTweetToMap(username, message, getMyLocation(), 60);
+        addTweetToMap(username, message, myLocation, 120);
+
+        LatLng sec = new LatLng(myLocation.getLatitude() + 1, myLocation.getLongitude());
+        addTweetToMap("Testing again", "Testing", sec, 120);
     }
 
     @Override
@@ -94,9 +113,12 @@ public class TwitterMapActivity extends FragmentActivity {
             return;
         }
 
-        // Handle locations
+        // Enable location checking
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mMap.setMyLocationEnabled(true);
+
+        // Move the map to my location
+        moveMapTo(getMyLocation());
 
         // Custom Info Windows
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -120,5 +142,6 @@ public class TwitterMapActivity extends FragmentActivity {
 
         // Initialize map options. For example:
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
     }
 }
