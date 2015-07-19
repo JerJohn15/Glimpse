@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Glimpse</string>
     <string name="title_activity_twitter_map">Glimpse</string>
+
+    <!--Glmpse Tester Keys-->
+    <!--<string name="api_key">n6pKt2oK9Xp9GR0lFegZLGcNO</string>-->
+    <!--<string name="api_secret">ngqzjofU9xOHYlKkKXVZWMR2cNxuBt5Wj2AS2jOkYcIOL55Fl5</string>-->
+    <!--<string name="token">3222672067-F70MWSfGAVpquZcagnII3Cf8mhnxoAxOpMwsydM</string>-->
+    <!--<string name="token_secret">lFzcC4kUjDVg9UmUAJAbPhCs7cnFIhgejzYMAmShZiIUn</string>-->
+
+    <!--Glmpse Keys-->
+    <string name="api_key">CDM7gJDH0fovtrlUYCJ6YjtGn</string>
+    <string name="api_secret">jKhDc4IpqhKCbDdmXIpnb20YnZN0gy5n2oj7tPafP0jW0V7iTp</string>
+    <string name="token">3283700119-9Y8zzYK7wCr6dXWLyHNKvRSLISsbJCs058gJwgB</string>
+    <string name="token_secret">V41JnB6a6tbQBCGFI9DMjK9aVfqNXMeYIPhCdwEslXKEC</string>
 </resources>
